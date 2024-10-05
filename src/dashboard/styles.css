@@ -1,0 +1,30 @@
+.dashboard-container {
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
+    z-index: 100;
+}
+
+.in-menu {
+    background-color: rgba(0, 0, 0, 0.393);
+}
+
+.navbar-container {
+    background-color: red;
+    min-width: 98 vw;
+    min-height: 10vh;
+}
+
+.dashboard-contents {
+    opacity: 1;
+    transition: opacity 0.3s ease; 
+}
+
+.in-menu .dashboard-contents {
+    opacity: 0.5; 
+    pointer-events: none; 
+}
