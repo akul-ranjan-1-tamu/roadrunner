@@ -10,10 +10,8 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     const {changeMenuState} = props;
 
     return <div className="navbar-container">
-        <FontAwesomeIcon icon={faPlus} onClick={changeMenuState} />
-        <FontAwesomeIcon icon={faSave} />
-        <FontAwesomeIcon icon={faTrash} />
         <FontAwesomeIcon icon={faBucket} />
+        <FontAwesomeIcon icon={faPlus} onClick={changeMenuState} />
     </div>
 }
 

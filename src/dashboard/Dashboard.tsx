@@ -19,15 +19,13 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
 
     return (
         <div className={"dashboard-container " + (inMenu ? "in-menu" : "")}>
-            {inMenu && 
-                <Menu />
-            }
-            <div className="dashboard-contents">
+            <Menu />
+            <div className="dashboard-contents" onClick={() => inMenu ? setInMenu(false) : null }>
                 <Grid />
-                <NavBar changeMenuState={changeMenuState}/>`
+                <NavBar changeMenuState={changeMenuState} />
             </div>
         </div>
     );
-}
+};
 
 export default Dashboard;

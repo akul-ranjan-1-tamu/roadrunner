@@ -3,7 +3,9 @@
     height: 10vh;
     border: 2px solid red;
     display: flex;
+    flex-direction: row;
     gap: 15px;
     font-size: 55px; 
     color: black;   
+    align-content: end;
 }
