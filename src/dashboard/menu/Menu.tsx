@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MENU_STATE, MENU_STATE_MAP, MenuContents as MenuContentsType } from "./types";
+import { MENU_STATE, MENU_STATE_MAP, MenuContents } from "./types";
 
 
 interface MenuProps {
@@ -9,7 +9,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = (props) => {
 
-    const menuContents: MenuContentsType = MENU_STATE_MAP[props.state];
+    const menuContents: MenuContents = MENU_STATE_MAP[props.state];
 
     return <div className="menu-container">
         {menuContents.contents.map((entry, index) => (

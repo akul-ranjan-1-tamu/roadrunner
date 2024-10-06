@@ -13,10 +13,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
 
     const ANIMATION_DURATION = 300;
 
-    function changeMenuState() {
-        setInMenu(!inMenu);
-    }
-
+    //necassary so menu doesn't reset before closing animation
     useEffect(() => {
         if (!inMenu) {
             const timeout = setTimeout(() => {
@@ -34,7 +31,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             }
             <div className="dashboard-contents" onClick={() => (inMenu ? setInMenu(false) : null)}>
                 <Grid />
-                <NavBar changeMenuState={changeMenuState} />
+                <NavBar changeMenuState={() => setInMenu(true)} />
             </div>
         </div>
     );
