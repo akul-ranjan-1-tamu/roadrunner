@@ -29,10 +29,12 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             {
                 <Menu state={menuState} setMenuState={setMenuState} />
             }
-            <div className="dashboard-contents" onClick={() => (inMenu ? setInMenu(false) : null)}>
-                <Grid />
-                <NavBar changeMenuState={() => setInMenu(true)} />
-            </div>
+            {
+                <div className="dashboard-contents" onClick={() => (inMenu ? setInMenu(false) : null)}>
+                    <Grid />
+                    <NavBar changeMenuState={() => setInMenu(true)} />
+                </div>
+            }
         </div>
     );
 };
