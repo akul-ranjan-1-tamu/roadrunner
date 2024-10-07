@@ -1,22 +1,28 @@
+import EmptyWidget from "../../widgets/empty-widget/EmptyWidget";
+import { WIDGET_TYPE } from "../../widgets/widgetManifest";
+
 export enum MENU_STATE { DEFAULT, GRAPHS, DIALS }
-export interface MenuEntry {icon: String, label: String, onClickState: MENU_STATE};
+export interface MenuEntry {
+    redirect?: {icon: String, label: String, onClickState: MENU_STATE},
+    widget?: WIDGET_TYPE;
+};
 export interface MenuContents {contents: MenuEntry[]};
 
 export const DEFAULT_MENU_CONTENTS: MenuContents = {
     contents: [
-        {icon: "", label: "graphs", onClickState: MENU_STATE.GRAPHS},
-        {icon: "", label: "dials", onClickState: MENU_STATE.DIALS}, ]
+        {redirect: {icon: "", label: "graphs", onClickState: MENU_STATE.GRAPHS}},
+        {redirect: {icon: "", label: "dials", onClickState: MENU_STATE.DIALS}}, ]
 };
 
 export const GRAPHS_CONTENTS: MenuContents = {
     contents: [
-
+        {widget: WIDGET_TYPE.EMPTY}
     ]
 };
 
 export const DIALS_CONTENTS: MenuContents = {
     contents: [
-
+        {widget: WIDGET_TYPE.EMPTY}
     ]
 };
 

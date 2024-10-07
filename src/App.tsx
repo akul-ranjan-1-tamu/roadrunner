@@ -2,10 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Dashboard from './dashboard/Dashboard';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
   return (
-    <Dashboard />
+    <DndProvider backend={HTML5Backend}>
+        <Dashboard />
+    </DndProvider>
   );
 }
 
