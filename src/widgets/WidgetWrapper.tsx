@@ -10,7 +10,7 @@ interface WidgetWrapperProps {
 
 const WidgetWrapper: React.FC<WidgetWrapperProps> = ({id, title, onRemove, children}) => {
     return <>
-        <div className={"widget-wrapper-container " + (DEBUG ? "debug" : "")}>
+        <div className={"widget-wrapper-container"}>
             {children}
         </div>
     </>;

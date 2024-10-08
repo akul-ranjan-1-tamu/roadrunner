@@ -38,7 +38,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       x,
       y,
       i: `widget-${widgetID.current}`,
-      isBounded: true
+      isBounded: true,
     };
     widgetID.current += 1;
     setWidgets([...widgets, updatedWidget]);
@@ -47,8 +47,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const handleLayoutChange = (newWidgetLayout: Widget[]) => {
     setWidgets(newWidgetLayout);
   };
-
-  console.log(widgets);
 
   return (
     <div className={"dashboard-container " + (inMenu ? "in-menu" : "")}>

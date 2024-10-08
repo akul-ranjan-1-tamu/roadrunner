@@ -2,6 +2,7 @@ import { WidgetPreset } from "../../../widgets/types";
 import { WIDGET_TYPE } from "../../../widgets/widgetManifest";
 import WidgetSpawner from "../../../widgets/WidgetSpawner";
 import { MENU_STATE, MenuEntry } from "../types";
+import {MenuItem} from "../MenuItem";
 
 const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => void, handleWidgetSpawn: (widgetPreset: WidgetPreset) => void): JSX.Element => {
     
@@ -9,7 +10,7 @@ const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => 
         const redirect = entry.redirect;
         return (
             <div onClick={() => setMenuState(redirect.onClickState)}>
-                <p>{redirect.label}</p>
+                <MenuItem title={redirect.label}></MenuItem>
             </div>
         );
     } else if (entry.widget !== undefined) {
@@ -17,7 +18,7 @@ const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => 
         return (
             <div>
                 <WidgetSpawner widgetPreset={widgetPreset} handleWidgetSpawn={handleWidgetSpawn}>
-                    widget spawner!
+                    <MenuItem title={widgetPreset.title}></MenuItem>
                 </WidgetSpawner>
             </div>
         );

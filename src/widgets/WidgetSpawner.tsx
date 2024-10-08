@@ -1,6 +1,7 @@
 import { useDrag } from "react-dnd";
 import { WIDGET_TYPE } from "./widgetManifest";
 import { WidgetPreset } from "./types";
+import { useState } from "react";
 
 interface WidgetSpawnerProps {
     widgetPreset: WidgetPreset;
@@ -9,13 +10,19 @@ interface WidgetSpawnerProps {
 }
 
 const WidgetSpawner: React.FC<WidgetSpawnerProps> = ({ widgetPreset, handleWidgetSpawn, children }) => {
+    //hide children while dragging
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    
     return (
         <div
             className="widget-spawner"
             draggable={true}
-            onDragStart={() => handleWidgetSpawn(widgetPreset)}
+            onDragStart={() => {
+                setIsDragging(true)
+                handleWidgetSpawn(widgetPreset)}}
+            onDragEnd={() => setIsDragging(false)}
         >
-            {children}
+            {!isDragging && children}
         </div>
     );
 };
