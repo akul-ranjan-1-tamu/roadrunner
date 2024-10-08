@@ -1,4 +1,5 @@
 import { DEBUG } from "../utils/debug";
+import "./styles.css";
 
 interface WidgetWrapperProps {
     id: string;

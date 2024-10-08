@@ -1,10 +1,11 @@
 import EmptyWidget from "../../widgets/empty-widget/EmptyWidget";
+import { RESIZE_HANDLES, WidgetPreset } from "../../widgets/types";
 import { WIDGET_TYPE } from "../../widgets/widgetManifest";
 
 export enum MENU_STATE { DEFAULT, GRAPHS, DIALS }
 export interface MenuEntry {
     redirect?: {icon: String, label: String, onClickState: MENU_STATE},
-    widget?: WIDGET_TYPE;
+    widget?: WidgetPreset;
 };
 export interface MenuContents {contents: MenuEntry[]};
 
@@ -16,13 +17,12 @@ export const DEFAULT_MENU_CONTENTS: MenuContents = {
 
 export const GRAPHS_CONTENTS: MenuContents = {
     contents: [
-        {widget: WIDGET_TYPE.EMPTY}
+        {widget: {type: WIDGET_TYPE.EMPTY, title: "empty", h: 1, w: 1, availableHandles: RESIZE_HANDLES}}
     ]
 };
 
 export const DIALS_CONTENTS: MenuContents = {
     contents: [
-        {widget: WIDGET_TYPE.EMPTY}
     ]
 };
 

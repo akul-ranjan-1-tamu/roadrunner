@@ -1,8 +1,9 @@
+import { WidgetPreset } from "../../../widgets/types";
 import { WIDGET_TYPE } from "../../../widgets/widgetManifest";
 import WidgetSpawner from "../../../widgets/WidgetSpawner";
 import { MENU_STATE, MenuEntry } from "../types";
 
-const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => void, handleWidgetSpawn: (widgetType: WIDGET_TYPE) => void): JSX.Element => {
+const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => void, handleWidgetSpawn: (widgetPreset: WidgetPreset) => void): JSX.Element => {
     
     if (entry.redirect !== undefined) {
         const redirect = entry.redirect;
@@ -12,10 +13,10 @@ const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => 
             </div>
         );
     } else if (entry.widget !== undefined) {
-        const widgetType = entry.widget;
+        const widgetPreset = entry.widget;
         return (
             <div>
-                <WidgetSpawner widgetType={widgetType} handleWidgetSpawn={handleWidgetSpawn}>
+                <WidgetSpawner widgetPreset={widgetPreset} handleWidgetSpawn={handleWidgetSpawn}>
                     widget spawner!
                 </WidgetSpawner>
             </div>
