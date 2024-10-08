@@ -3,4 +3,9 @@
     height: 85vh;
     margin: 20px;
     align-self: center;
+    border-radius: 20px;
+}
+
+.highlighted {
+    z-index: 100;
 }

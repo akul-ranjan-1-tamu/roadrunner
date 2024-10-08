@@ -13,6 +13,8 @@ interface DashboardProps {}
 
 const Dashboard: React.FC<DashboardProps> = () => {
   const [inMenu, setInMenu] = useState<boolean>(false);
+  const [backgroundBlur, setBackgroundBlur] = useState<boolean>(false);
+
   const [menuState, setMenuState] = useState<MENU_STATE>(MENU_STATE.DEFAULT);
   const [widgets, setWidgets] = useState<Widget[]>([]);
   const widgetID = useRef<number>(0);
@@ -49,10 +51,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
 
   return (
-    <div className={"dashboard-container " + (inMenu ? "in-menu" : "")}>
-      <Menu state={menuState} setMenuState={setMenuState} handleWidgetSpawn={handleWidgetSpawn} />
+    <div className={"dashboard-container " + (inMenu ? "in-menu " : "") + (backgroundBlur ? "background-blur" : "")}>
+        {
+            <Menu state={menuState} setMenuState={setMenuState} handleWidgetSpawn={handleWidgetSpawn} />
+        }
       <div className="dashboard-contents" onClick={() => (inMenu ? setInMenu(false) : null)}>
-        <Grid widgets={widgets} onLayoutChange={handleLayoutChange} onDrop={handleDropWidget} />
+        <Grid widgets={widgets} onLayoutChange={handleLayoutChange} onDrop={handleDropWidget} setBackgroundBlur={setBackgroundBlur}/>
         <NavBar changeMenuState={() => setInMenu(true)} emptyLayout={() => setWidgets([])}/>
       </div>
     </div>

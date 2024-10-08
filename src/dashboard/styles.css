@@ -7,16 +7,16 @@
     background-color: rgba(0, 0, 0, 0.393);
 }
 
+.background-blur {
+    background-color: rgba(0, 0, 0, 0.393);
+}
+
 .dashboard-contents {
     position: relative;
     display: flex;
     flex-direction: column;
     z-index: 1;
     transition: opacity 0.3s ease; 
-}
-
-.in-menu .dashboard-contents {
-    opacity: 0.5; 
 }
 
 .menu-container {
@@ -38,4 +38,9 @@
 
 .in-menu .dashboard-contents {
     opacity: 0.5;
+}
+
+.background-blur .grid-container {
+    z-index: 10;
+    background-color:#ffffff;
 }

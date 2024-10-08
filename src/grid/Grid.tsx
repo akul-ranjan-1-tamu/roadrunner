@@ -10,9 +10,10 @@ interface GridProps {
   widgets: Widget[];
   onLayoutChange: (newWidgetLayout: Widget[]) => void;
   onDrop: (widget: Widget, x: number, y: number) => void;
+  setBackgroundBlur: (state: boolean) => void;
 }
 
-const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop }) => {
+const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgroundBlur }) => {
   const [selectedWidget, setSelectedWidget] = useState<Widget | null>(null);
   const [gridWidth, setGridWidth] = useState<number>(0);
   const gridContainerRef = useRef<HTMLDivElement>(null);
@@ -56,7 +57,7 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop }) => {
     onLayoutChange(updatedWidgets);
   };
 
-  const handleDrop = (_: Widget[], widget: Widget) => {
+  const handleDrop = (widget: Widget) => {
     const droppedWidget = {
       ...widget,
       w: widget.w,
@@ -68,7 +69,7 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop }) => {
   };
 
   return (
-    <div ref={gridContainerRef} className={"grid-container " + (DEBUG ? "debug" : "")}>
+    <div ref={gridContainerRef} className={"grid-container " + (DEBUG ? "debug " : "")}>
       {gridWidth > 0 && (
         <GridLayout
           className="layout"
@@ -82,7 +83,11 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop }) => {
           compactType={null}
           isBounded={true}
           onLayoutChange={handleLayoutChange}
-          onDrop={handleDrop}
+          onDragStart={() => setBackgroundBlur(true)}
+          onDragStop={() => setBackgroundBlur(false)}
+          onResizeStart={() => setBackgroundBlur(true)}
+          onResizeStop={() => setBackgroundBlur(false)}
+          onDrop={(_, widget: Widget) => {setBackgroundBlur(false); handleDrop(widget);}}
           style={{ width: "100%", height: "100%" }}
         >
           {widgets.map((widget) => (
