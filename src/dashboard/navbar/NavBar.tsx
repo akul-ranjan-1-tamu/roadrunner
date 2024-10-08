@@ -6,13 +6,14 @@ import { DEBUG } from '../../utils/debug';
 
 interface NavBarProps {
     changeMenuState: () => void;
+    emptyLayout: () => void;
 };
 
-const NavBar: React.FC<NavBarProps> = (props) => {
-    const {changeMenuState} = props;
+const NavBar: React.FC<NavBarProps> = ({changeMenuState, emptyLayout}) => {
 
     return <div className={"navbar-container " + (DEBUG ? "debug" : "")}>
         <FontAwesomeIcon icon={faPlus} onClick={changeMenuState} />
+        <FontAwesomeIcon icon={faTrash} onClick={emptyLayout} />
     </div>
 }
 

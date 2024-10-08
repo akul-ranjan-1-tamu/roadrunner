@@ -13,7 +13,6 @@ export interface Widget extends Layout {
     availableHandles: ResizeHandle[];
 }
 
-
 export interface WidgetPreset {
     //title which shows up in menu
     title: string;

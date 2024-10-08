@@ -53,7 +53,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       <Menu state={menuState} setMenuState={setMenuState} handleWidgetSpawn={handleWidgetSpawn} />
       <div className="dashboard-contents" onClick={() => (inMenu ? setInMenu(false) : null)}>
         <Grid widgets={widgets} onLayoutChange={handleLayoutChange} onDrop={handleDropWidget} />
-        <NavBar changeMenuState={() => setInMenu(true)} />
+        <NavBar changeMenuState={() => setInMenu(true)} emptyLayout={() => setWidgets([])}/>
       </div>
     </div>
   );
