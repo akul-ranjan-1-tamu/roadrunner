@@ -1,5 +1,5 @@
-import { DEBUG } from "../utils/debug";
-import "./styles.css";
+import { DEBUG } from "../../utils/debug";
+import "../styles.css";
 
 interface WidgetWrapperProps {
     children?: React.ReactNode;

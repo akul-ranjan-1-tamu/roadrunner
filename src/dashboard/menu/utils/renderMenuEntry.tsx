@@ -1,6 +1,6 @@
 import { WidgetPreset } from "../../../widgets/types";
-import { WIDGET_TYPE } from "../../../widgets/widgetManifest";
-import WidgetSpawner from "../../../widgets/WidgetSpawner";
+import { WIDGET_TYPE } from "../../../widgets/manifest";
+import WidgetSpawner from "../../../widgets/utils/WidgetSpawner";
 import { MENU_STATE, MenuEntry } from "../types";
 import {MenuItem} from "../MenuItem";
 

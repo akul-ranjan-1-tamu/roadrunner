@@ -1,6 +1,6 @@
 import { useDrag } from "react-dnd";
-import { WIDGET_TYPE } from "./widgetManifest";
-import { WidgetPreset } from "./types";
+import { WIDGET_TYPE } from "../manifest";
+import { WidgetPreset } from "../types";
 import { useState } from "react";
 
 interface WidgetSpawnerProps {

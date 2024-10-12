@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MENU_STATE, MENU_STATE_MAP, MenuContents, MenuEntry } from "./types";
 import renderMenuEntry from "./utils/renderMenuEntry";
-import { WIDGET_TYPE } from "../../widgets/widgetManifest";
+import { WIDGET_TYPE } from "../../widgets/manifest";
 import { WidgetPreset } from "../../widgets/types";
 
 

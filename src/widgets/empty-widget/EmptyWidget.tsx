@@ -1,7 +1,7 @@
 import { WidgetProps } from "../types";
-import WidgetWrapper from "../WidgetWrapper";
+import WidgetWrapper from "../utils/WidgetWrapper";
 
-const EmptyWidget: React.FC<WidgetProps> = ({id}) => {
+const EmptyWidget: React.FC<WidgetProps> = () => {
     return <WidgetWrapper>Empty Widget</WidgetWrapper>
 }
 

@@ -6,6 +6,8 @@ import Menu from "./menu/Menu";
 import { MENU_STATE } from "./menu/types";
 import { Widget, WidgetPreset } from "../widgets/types";
 import { Layout } from "react-grid-layout";
+import { getWidgetComponent } from "../widgets/utils/getWidgetComponent";
+import { WIDGET_TYPE } from "../widgets/manifest";
 
 const ANIMATION_DURATION = 300;
 
@@ -16,7 +18,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [backgroundBlur, setBackgroundBlur] = useState<boolean>(false);
 
   const [menuState, setMenuState] = useState<MENU_STATE>(MENU_STATE.DEFAULT);
+
   const [widgets, setWidgets] = useState<Widget[]>([]);
+  const [incomingWidget, setIncomingWidget] = useState<WidgetPreset | null>(null);
   const widgetID = useRef<number>(0);
 
   // Close the menu after animation, allowing time for state reset
@@ -32,6 +36,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const handleWidgetSpawn = (widgetPreset: WidgetPreset) => {
     setInMenu(false);
+    setIncomingWidget(widgetPreset);
   };
 
   const handleDropWidget = (newWidget: Widget, x: number, y: number) => {
@@ -41,6 +46,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       y,
       i: `widget-${widgetID.current}`,
       isBounded: true,
+      component: getWidgetComponent(incomingWidget?.type || WIDGET_TYPE.EMPTY, String(widgetID))
     };
     widgetID.current += 1;
     setWidgets([...widgets, updatedWidget]);

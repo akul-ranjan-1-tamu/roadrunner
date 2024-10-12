@@ -1,10 +1,11 @@
 import GridLayout, { Layout } from "react-grid-layout";
 import { useEffect, useRef, useState } from "react";
-import { Widget } from "../widgets/types";
+import { Widget, WidgetPreset } from "../widgets/types";
 import "./styles.css";
 import "react-grid-layout/css/styles.css";
 import { DEBUG } from "../utils/debug";
 import EmptyWidget from "../widgets/empty-widget/EmptyWidget";
+import { getWidgetComponent } from "../widgets/utils/getWidgetComponent";
 
 interface GridProps {
   widgets: Widget[];
@@ -18,26 +19,20 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
   const [gridWidth, setGridWidth] = useState<number>(0);
   const gridContainerRef = useRef<HTMLDivElement>(null);
 
+  //updates grid width based on container
   useEffect(() => {
     if (gridContainerRef.current) {
-      // Function to update grid width based on container
       const updateGridWidth = () => {
         if (gridContainerRef.current) {
           setGridWidth(gridContainerRef.current.offsetWidth);
         }
       };
-
-      // Initialize width on component mount
       updateGridWidth();
-
-      // Observe container size changes using ResizeObserver
       const resizeObserver = new ResizeObserver(() => {
         updateGridWidth();
       });
 
       resizeObserver.observe(gridContainerRef.current);
-
-      // Clean up the observer on unmount
       return () => {
         if (gridContainerRef.current) {
           resizeObserver.unobserve(gridContainerRef.current);
@@ -62,7 +57,6 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
       ...widget,
       w: widget.w,
       h: widget.h,
-      component: <EmptyWidget id={widget.i} />,  
     };
 
     onDrop(droppedWidget, widget.x, widget.y);

@@ -1,5 +1,5 @@
 import { Layout } from "react-grid-layout";
-import { WIDGET_TYPE } from "./widgetManifest";
+import { WIDGET_TYPE } from "./manifest";
 
 export interface WidgetProps {
     id: string;
