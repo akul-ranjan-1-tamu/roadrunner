@@ -8,6 +8,8 @@ if [[ "$1" == "--quiet" ]]; then
     QUIET=true
 fi
 
+#start redis
+C:/'Program Files'/redis/redis-server.exe &
 
 #start backend
 cd backend
