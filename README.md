@@ -7,3 +7,10 @@ To start the application use ./dev.sh. This script will install dependencies and
 '
 $ ./dev.sh
 '
+
+Making a new widget type: 
+1. use "empty widget" and "basic widget" as inspo
+2. Make a new folder in frontend/src/widgets
+3. Make the widget component in the folder (make sure to use the WidgetWrapper component)
+4. Make a new enum type for your widget in frontend/src/widgets/manifest.tsx
+5. Add the widget to the menu layout (see frontend/src/dashboard/menu/manifest.tsx)
