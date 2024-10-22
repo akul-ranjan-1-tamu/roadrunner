@@ -13,8 +13,6 @@ if [[ "$1" == "--quiet-back" ]]; then
     BACK_QUIET=true
 fi
 
-
-
 #start redis
 C:/'Program Files'/redis/redis-server.exe &
 
