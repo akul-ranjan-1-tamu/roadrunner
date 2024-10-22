@@ -16,6 +16,7 @@ python3 app.py &
 
 #start frontend
 cd ../frontend
+npm install
 if [ "$QUIET" = true ]; then
     npm run start > /dev/null 2>&1
 else
