@@ -1,22 +1,34 @@
 import { DataPayload, DATASOURCE } from "./types";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import io from "socket.io-client";
 
 interface DataProviderProps {
-    source: DATASOURCE;
     children: React.ReactNode;
 };
 
 interface DataContextType {
-    data: DataPayload | null;
-    setData: React.Dispatch<React.SetStateAction<DataPayload | null>>;
+    data: DataPayload[] | null;
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
-const DataProvider: React.FC<DataProviderProps> = ({source, children}) => {
-    const [data, setData] = useState<DataPayload | null>(null); 
+const DataProvider: React.FC<DataProviderProps> = ({children}) => {
+    const [data, setData] = useState<DataPayload[] | null>(null); 
 
-    return <DataContext.Provider value={{data, setData}}>{children}</DataContext.Provider>;
+    useEffect(() => {
+        const socket = io("http://localhost:5000");
+
+        socket.on('id', (newData: DataPayload) => {
+            console.log("new data: ", newData);
+            setData((prevData) => prevData ? [...prevData, newData] : [newData]);
+        }); 
+
+        return () => {
+            socket.disconnect();
+        }
+    }, []);
+
+    return <DataContext.Provider value={ {data} }>{children}</DataContext.Provider>;
 };
 
 export const useData = () => {

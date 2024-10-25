@@ -23,7 +23,7 @@
     <script>
         const socket = io();
 
-        socket.on('some_id', function (data) {
+        socket.on('id', function (data) {
             const tableBody = document.getElementById('data-table-body');
             const row = document.createElement('tr');
             row.innerHTML = `<td>${data.id}</td><td>${data.value}</td><td>${data.timestamp}</td>`;

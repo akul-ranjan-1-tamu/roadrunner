@@ -10,7 +10,9 @@ import DataProvider from './data-provider/DataProvider';
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
-          <Dashboard />
+      <DataProvider>
+        <Dashboard />
+      </DataProvider>
     </DndProvider>
   );
 }
