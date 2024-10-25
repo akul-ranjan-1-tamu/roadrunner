@@ -10,7 +10,7 @@ const BasicDisplay: React.FC<BasicDisplay> = () => {
 
     console.log(data);
 
-    return <WidgetWrapper>Basic Display</WidgetWrapper>
+    return <WidgetWrapper>Speed</WidgetWrapper>
 }
 
 export default BasicDisplay;

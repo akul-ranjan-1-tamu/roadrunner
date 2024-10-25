@@ -10,13 +10,13 @@ interface DataContextType {
     data: DataPayload[] | null;
 };
 
-const DataContext = createContext<DataContextType | undefined>(undefined);
+export const DataContext = createContext<DataContextType | undefined>(undefined);
 
 const DataProvider: React.FC<DataProviderProps> = ({children}) => {
     const [data, setData] = useState<DataPayload[] | null>(null); 
 
     useEffect(() => {
-        const socket = io("http://localhost:5000");
+        const socket = io("http://localhost:5000"); //TODO: Make the port a const!!!!
 
         socket.on('id', (newData: DataPayload) => {
             console.log("new data: ", newData);
