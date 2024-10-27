@@ -8,9 +8,9 @@ const BasicDisplay: React.FC<BasicDisplay> = () => {
 
     const {data} = useData();
 
-    console.log(data);
+    console.log("data", data);
 
-    return <WidgetWrapper>Speed</WidgetWrapper>
+    return <WidgetWrapper>Speed: {data["speed"].value ?? null}</WidgetWrapper>
 }
 
 export default BasicDisplay;

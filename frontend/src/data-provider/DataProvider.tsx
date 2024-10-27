@@ -1,4 +1,4 @@
-import { DataPayload, DATASOURCE } from "./types";
+import { DataPayload, DATASOURCE, RecentData } from "./types";
 import { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 
@@ -7,28 +7,31 @@ interface DataProviderProps {
 };
 
 interface DataContextType {
-    data: DataPayload[] | null;
+    data: RecentData;
 };
 
 export const DataContext = createContext<DataContextType | undefined>(undefined);
 
-const DataProvider: React.FC<DataProviderProps> = ({children}) => {
-    const [data, setData] = useState<DataPayload[] | null>(null); 
+const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
+    const [data, setData] = useState<RecentData>({});
 
     useEffect(() => {
-        const socket = io("http://localhost:5000"); //TODO: Make the port a const!!!!
+        const socket = io("http://localhost:5000"); // TODO: Make the port a constant
 
         socket.on('id', (newData: DataPayload) => {
-            console.log("new data: ", newData);
-            setData((prevData) => prevData ? [...prevData, newData] : [newData]);
-        }); 
+
+            setData((prevData) => ({
+                ...prevData,
+                [newData.key]: { value: newData.value, timestamp: newData.timestamp },
+            }));
+        });
 
         return () => {
             socket.disconnect();
-        }
+        };
     }, []);
 
-    return <DataContext.Provider value={ {data} }>{children}</DataContext.Provider>;
+    return <DataContext.Provider value={{ data }}>{children}</DataContext.Provider>;
 };
 
 export const useData = () => {

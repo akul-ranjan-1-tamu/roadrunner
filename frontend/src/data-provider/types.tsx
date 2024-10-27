@@ -2,6 +2,10 @@ export enum DATASOURCE {SIM};
 
 export interface DataPayload {
     timestamp: number,
-    speed?: number,
-    acceleration?: number
+    key: string;
+    value: number;
+}
+
+export type RecentData = {
+    [key: string]: {value: number, timestamp: number};
 }
