@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { MENU_STATE, MENU_STATE_MAP, MenuContents, MenuEntry } from "./types";
 import renderMenuEntry from "./utils/renderMenuEntry";
-import { WIDGET_TYPE } from "../../widgets/manifest";
-import { WidgetPreset } from "../../widgets/types";
+import { WidgetConfig } from "../../widgets/types";
 
 
 interface MenuProps {
     state: MENU_STATE;
     setMenuState: (state: MENU_STATE) => void;
-    handleWidgetSpawn: (widgetPreset: WidgetPreset) => void;  
+    handleWidgetSpawn: (widgetPreset: WidgetConfig) => void;  
 }
 
 const Menu: React.FC<MenuProps> = ({state, setMenuState, handleWidgetSpawn}) => {

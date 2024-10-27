@@ -1,10 +1,9 @@
-import { WidgetPreset } from "../../../widgets/types";
-import { WIDGET_TYPE } from "../../../widgets/manifest";
+import { WidgetConfig } from "../../../widgets/types";
 import WidgetSpawner from "../../../widgets/utils/WidgetSpawner";
 import { MENU_STATE, MenuEntry } from "../types";
 import {MenuItem} from "../MenuItem";
 
-const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => void, handleWidgetSpawn: (widgetPreset: WidgetPreset) => void): JSX.Element => {
+const renderMenuEntry = (entry: MenuEntry, setMenuState: (state: MENU_STATE) => void, handleWidgetSpawn: (widgetPreset: WidgetConfig) => void): JSX.Element => {
     
     if (entry.redirect !== undefined) {
         const redirect = entry.redirect;

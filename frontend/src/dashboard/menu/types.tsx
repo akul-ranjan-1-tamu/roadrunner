@@ -1,10 +1,10 @@
-import { RESIZE_HANDLES, WidgetPreset } from "../../widgets/types";
-import { WIDGET_TYPE } from "../../widgets/manifest";
+import { RESIZE_HANDLES, WidgetConfig } from "../../widgets/types";
+import { WIDGET_TYPE } from "../../widgets/types";
 
 export enum MENU_STATE { DEFAULT, GRAPHS, DIALS }
 export interface MenuEntry {
     redirect?: {icon: String, label: String, onClickState: MENU_STATE},
-    widget?: WidgetPreset;
+    widget?: WidgetConfig;
 };
 export interface MenuContents {contents: MenuEntry[]};
 
@@ -16,9 +16,7 @@ export const DEFAULT_MENU_CONTENTS: MenuContents = {
 
 export const GRAPHS_CONTENTS: MenuContents = {
     contents: [
-        {widget: {type: WIDGET_TYPE.EMPTY, title: "empty", h: 1, w: 1, availableHandles: RESIZE_HANDLES}},
         {widget: {type: WIDGET_TYPE.BASIC_DISPLAY, title: "basic_display", h:1, w:1, availableHandles: RESIZE_HANDLES}},
-        
     ]
 };
 

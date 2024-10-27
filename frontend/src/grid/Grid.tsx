@@ -1,6 +1,6 @@
 import GridLayout, { Layout } from "react-grid-layout";
 import { useEffect, useRef, useState } from "react";
-import { Widget, WidgetPreset } from "../widgets/types";
+import { Widget, WidgetConfig } from "../widgets/types";
 import "./styles.css";
 import "react-grid-layout/css/styles.css";
 import { DEBUG } from "../utils/debug";

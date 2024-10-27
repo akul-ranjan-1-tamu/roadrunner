@@ -1,11 +1,10 @@
-import { useDrag } from "react-dnd";
-import { WIDGET_TYPE } from "../manifest";
-import { WidgetPreset } from "../types";
+
+import { WidgetConfig } from "../types";
 import { useState } from "react";
 
 interface WidgetSpawnerProps {
-    widgetPreset: WidgetPreset;
-    handleWidgetSpawn: (widgetPreset: WidgetPreset) => void;
+    widgetPreset: WidgetConfig;
+    handleWidgetSpawn: (widgetPreset: WidgetConfig) => void;
     children: React.ReactNode;
 }
 

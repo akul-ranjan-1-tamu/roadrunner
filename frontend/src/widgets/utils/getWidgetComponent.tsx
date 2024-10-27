@@ -1,14 +1,11 @@
 import BasicDisplay from "../basic-display/BasicDisplay";
-import EmptyWidget from "../empty-widget/EmptyWidget";
-import { WIDGET_TYPE } from "../manifest";
+import { WIDGET_TYPE } from "../types";
 
 export const getWidgetComponent: (widgetType: WIDGET_TYPE, id: string) => JSX.Element = (widgetType: WIDGET_TYPE, id: string) => {
-    if (widgetType === WIDGET_TYPE.EMPTY) {
-        return <EmptyWidget id={id} />
-    } else if (widgetType === WIDGET_TYPE.BASIC_DISPLAY) {
-        return <BasicDisplay id={id} />
+    if (widgetType === WIDGET_TYPE.BASIC_DISPLAY) {
+        return <BasicDisplay selected={false} config={BasicDisplay.defaultConfig} />
     }
     else {
-        return <EmptyWidget id={id} />
+        return <BasicDisplay selected={false} config={BasicDisplay.defaultConfig} />
     }
 };

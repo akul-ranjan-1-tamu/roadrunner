@@ -1,19 +1,16 @@
 import { Layout } from "react-grid-layout";
-import { WIDGET_TYPE } from "./manifest";
 
-export interface WidgetProps {
-    id: string;
-};
+export enum WIDGET_TYPE {BASIC_DISPLAY};
 
 export type ResizeHandle = "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne";
 export const RESIZE_HANDLES: ResizeHandle[] = ["s", "w", "e", "n", "sw", "nw", "se", "ne"];
 
 export interface Widget extends Layout {
     component: React.ReactNode;
-    availableHandles: ResizeHandle[];
+    config: WidgetConfig;
 }
 
-export interface WidgetPreset {
+export interface WidgetConfig {
     //title which shows up in menu
     title: string;
     //defines widget contents
@@ -26,4 +23,19 @@ export interface WidgetPreset {
     //max dimensions
     maxH?: number;
     maxW?: number;
+}
+
+export interface WidgetProps {
+    selected: boolean;
+    config: WidgetConfig;
+};
+
+export interface FormProps {
+    config: WidgetConfig;
+    setConfig: (newConfig: WidgetConfig) => void;
+};
+
+export interface ComponentWithForm<WidgetProps, FormProps, ConfigType> extends React.FC<WidgetProps> {
+    form: React.FC<FormProps>;
+    defaultConfig: ConfigType;
 }
