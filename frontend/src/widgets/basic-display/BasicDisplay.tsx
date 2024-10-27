@@ -7,10 +7,9 @@ interface BasicDisplay extends WidgetProps {};
 const BasicDisplay: React.FC<BasicDisplay> = () => {
 
     const {data} = useData();
+    const value = data["speed"] ? data["speed"].value : null;
 
-    console.log("data", data);
-
-    return <WidgetWrapper>Speed: {data["speed"].value ?? null}</WidgetWrapper>
+    return <WidgetWrapper>Speed: {value}</WidgetWrapper>
 }
 
 export default BasicDisplay;
