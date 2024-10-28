@@ -8,6 +8,7 @@ import { Widget, WidgetConfig } from "../widgets/types";
 import { Layout } from "react-grid-layout";
 import { getWidgetComponent } from "../widgets/utils/getWidgetComponent";
 import { WIDGET_TYPE } from "../widgets/types";
+import BasicDisplay from "../widgets/basic-display/BasicDisplay";
 
 const ANIMATION_DURATION = 300;
 
@@ -37,6 +38,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const handleWidgetSpawn = (widgetPreset: WidgetConfig) => {
     setInMenu(false);
     setIncomingWidget(widgetPreset);
+    console.log(widgetPreset);
   };
 
   const handleDropWidget = (newWidget: Widget, x: number, y: number) => {
@@ -46,7 +48,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       y,
       i: `widget-${widgetID.current}`,
       isBounded: true,
-      component: getWidgetComponent(incomingWidget?.type || WIDGET_TYPE.BASIC_DISPLAY, String(widgetID))
+      component: getWidgetComponent(incomingWidget?.type || WIDGET_TYPE.BASIC_DISPLAY, incomingWidget || BasicDisplay.defaultConfig, false)
     };
     widgetID.current += 1;
     setWidgets([...widgets, updatedWidget]);

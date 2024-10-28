@@ -1,11 +1,13 @@
-import BasicDisplay from "../basic-display/BasicDisplay";
-import { WIDGET_TYPE } from "../types";
+import BasicDisplay, { BasicDisplayConfig } from "../basic-display/BasicDisplay";
+import { WIDGET_TYPE, WidgetConfig } from "../types";
 
-export const getWidgetComponent: (widgetType: WIDGET_TYPE, id: string) => JSX.Element = (widgetType: WIDGET_TYPE, id: string) => {
+
+//TODO: Should take in type and config, then render using correct config
+export const getWidgetComponent: (widgetType: WIDGET_TYPE, config: WidgetConfig, selected: boolean) => JSX.Element = (widgetType: WIDGET_TYPE, config: WidgetConfig, selected: boolean) => {
     if (widgetType === WIDGET_TYPE.BASIC_DISPLAY) {
-        return <BasicDisplay selected={false} config={BasicDisplay.defaultConfig} />
+        return <BasicDisplay selected={selected} config={config as BasicDisplayConfig} />
     }
     else {
-        return <BasicDisplay selected={false} config={BasicDisplay.defaultConfig} />
+        return <BasicDisplay selected={selected} config={config as BasicDisplayConfig} />
     }
 };

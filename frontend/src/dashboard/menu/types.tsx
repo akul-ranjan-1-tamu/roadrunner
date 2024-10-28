@@ -1,31 +1,32 @@
+import BasicDisplay, { BasicDisplayConfig } from "../../widgets/basic-display/BasicDisplay";
 import { RESIZE_HANDLES, WidgetConfig } from "../../widgets/types";
 import { WIDGET_TYPE } from "../../widgets/types";
 
 export enum MENU_STATE { DEFAULT, GRAPHS, DIALS }
-export interface MenuEntry {
+export interface MenuEntry<Config extends WidgetConfig> {
     redirect?: {icon: String, label: String, onClickState: MENU_STATE},
-    widget?: WidgetConfig;
+    widget?: Config;
 };
-export interface MenuContents {contents: MenuEntry[]};
+export interface MenuContents<Config extends WidgetConfig> {contents: MenuEntry<Config>[]};
 
-export const DEFAULT_MENU_CONTENTS: MenuContents = {
+export const DEFAULT_MENU_CONTENTS: MenuContents<any> = {
     contents: [
         {redirect: {icon: "", label: "graphs", onClickState: MENU_STATE.GRAPHS}},
         {redirect: {icon: "", label: "dials", onClickState: MENU_STATE.DIALS}}, ]
 };
 
-export const GRAPHS_CONTENTS: MenuContents = {
+export const GRAPHS_CONTENTS: MenuContents<BasicDisplayConfig> = {
     contents: [
-        {widget: {type: WIDGET_TYPE.BASIC_DISPLAY, title: "basic_display", h:1, w:1, availableHandles: RESIZE_HANDLES}},
+        {widget: BasicDisplay.defaultConfig},
     ]
 };
 
-export const DIALS_CONTENTS: MenuContents = {
+export const DIALS_CONTENTS: MenuContents<any> = {
     contents: [
     ]
 };
 
-export const MENU_STATE_MAP: Record<MENU_STATE, MenuContents> = {
+export const MENU_STATE_MAP: Record<MENU_STATE, MenuContents<any>> = {
     [MENU_STATE.DEFAULT]: DEFAULT_MENU_CONTENTS, 
     [MENU_STATE.DIALS]: DIALS_CONTENTS,
     [MENU_STATE.GRAPHS]: GRAPHS_CONTENTS

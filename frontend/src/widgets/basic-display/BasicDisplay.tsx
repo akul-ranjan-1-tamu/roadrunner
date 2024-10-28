@@ -4,31 +4,38 @@ import { WidgetProps, WidgetConfig, FormProps, ComponentWithForm, RESIZE_HANDLES
 import WidgetWrapper from "../utils/WidgetWrapper";
 import { WIDGET_TYPE } from "../types";
 
+
+// define all the configurable options unique to this widget type
 export interface BasicDisplayConfig extends WidgetConfig {
     dataKey: string;
 }
 
+//specify the particlar configuration type 
 interface BasicDisplayProps extends WidgetProps {
     config: BasicDisplayConfig;
 }
 
+//component which defines the widget (and its behavior)
 const BasicDisplay: ComponentWithForm<BasicDisplayProps, FormProps, BasicDisplayConfig> = ({ selected, config }) => {
     const { data } = useData();
     const [configState, setConfig] = useState<BasicDisplayConfig>(config);
     const value = data[configState.dataKey] ? data[configState.dataKey].value : null;
 
-
-    return <WidgetWrapper>{configState.dataKey}: {value}</WidgetWrapper>;
+    //make sure to use the widget wrapper!
+    return <WidgetWrapper selected={selected} config={configState} setConfig={setConfig} Form={BasicDisplay.form}>{configState.dataKey}: {value}</WidgetWrapper>;
 };
 
-BasicDisplay.form = ({ config, setConfig }) => {
 
+//defines form which edits the configurable settings
+BasicDisplay.form = ({ config, setConfig }) => {
     return (
         <div>
+            form!!!!
         </div>
     );
 };
 
+//define the default configuration
 BasicDisplay.defaultConfig = {
     title: "Basic Display",
     w: 1, 
@@ -36,6 +43,6 @@ BasicDisplay.defaultConfig = {
     availableHandles: RESIZE_HANDLES,
     type: WIDGET_TYPE.BASIC_DISPLAY,
     dataKey: "speed"
-}
+} as BasicDisplayConfig;
 
 export default BasicDisplay;

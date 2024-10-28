@@ -12,11 +12,11 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({state, setMenuState, handleWidgetSpawn}) => {
 
-    const menuContents: MenuContents = MENU_STATE_MAP[state];
+    const menuContents: MenuContents<any> = MENU_STATE_MAP[state];
 
     return (
-        <div className="menu-container ">
-            {menuContents.contents.map((entry: MenuEntry, index) => 
+        <div className="menu-container">
+            {menuContents.contents.map((entry: MenuEntry<any>, index) => 
                 <div key={index}>
                     {renderMenuEntry(entry, setMenuState, handleWidgetSpawn)}
                 </div>

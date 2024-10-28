@@ -4,8 +4,6 @@ import { Widget, WidgetConfig } from "../widgets/types";
 import "./styles.css";
 import "react-grid-layout/css/styles.css";
 import { DEBUG } from "../utils/debug";
-import EmptyWidget from "../widgets/empty-widget/EmptyWidget";
-import { getWidgetComponent } from "../widgets/utils/getWidgetComponent";
 
 interface GridProps {
   widgets: Widget[];
