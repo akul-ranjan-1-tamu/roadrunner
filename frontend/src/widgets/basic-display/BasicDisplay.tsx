@@ -3,11 +3,12 @@ import { useData } from "../../data-provider/DataProvider";
 import { WidgetProps, WidgetConfig, FormProps, ComponentWithForm, RESIZE_HANDLES } from "../types";
 import WidgetWrapper from "../utils/WidgetWrapper";
 import { WIDGET_TYPE } from "../types";
+import { DATASTREAM } from "../../shared-types";
 
 
 // define all the configurable options unique to this widget type
 export interface BasicDisplayConfig extends WidgetConfig {
-    dataKey: string;
+    dataKey: DATASTREAM;
 }
 
 //specify the particlar configuration type 
@@ -28,6 +29,8 @@ const BasicDisplay: ComponentWithForm<BasicDisplayProps, FormProps, BasicDisplay
 
 //defines form which edits the configurable settings
 BasicDisplay.form = ({ config, setConfig }) => {
+
+    
     return (
         <div>
             form!!!!

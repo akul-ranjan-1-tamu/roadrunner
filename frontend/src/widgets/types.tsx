@@ -6,7 +6,6 @@ export type ResizeHandle = "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne";
 export const RESIZE_HANDLES: ResizeHandle[] = ["s", "w", "e", "n", "sw", "nw", "se", "ne"];
 
 export interface Widget extends Layout {
-    component: React.ReactNode;
     config: WidgetConfig;
 }
 

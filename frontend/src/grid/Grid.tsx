@@ -4,16 +4,18 @@ import { Widget, WidgetConfig } from "../widgets/types";
 import "./styles.css";
 import "react-grid-layout/css/styles.css";
 import { DEBUG } from "../utils/debug";
+import { getWidgetComponent } from "../widgets/utils/getWidgetComponent";
 
 interface GridProps {
   widgets: Widget[];
   onLayoutChange: (newWidgetLayout: Widget[]) => void;
   onDrop: (widget: Widget, x: number, y: number) => void;
   setBackgroundBlur: (state: boolean) => void;
+  selectedWidget: Widget | null;
+  setSelectedWidget: (widget: Widget | null) => void;
 }
 
-const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgroundBlur }) => {
-  const [selectedWidget, setSelectedWidget] = useState<Widget | null>(null);
+const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgroundBlur, selectedWidget, setSelectedWidget}) => {
   const [gridWidth, setGridWidth] = useState<number>(0);
   const gridContainerRef = useRef<HTMLDivElement>(null);
 
@@ -76,15 +78,15 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
           isBounded={true}
           onLayoutChange={handleLayoutChange}
           onDragStart={() => setBackgroundBlur(true)}
-          onDragStop={() => setBackgroundBlur(false)}
+          onDragStop={() => {setBackgroundBlur(false); setSelectedWidget(null)}}
           onResizeStart={() => setBackgroundBlur(true)}
           onResizeStop={() => setBackgroundBlur(false)}
           onDrop={(_, widget: Widget) => {setBackgroundBlur(false); handleDrop(widget);}}
           style={{ width: "100%", height: "100%" }}
         >
           {widgets.map((widget) => (
-            <div key={widget.i} onClick={() => setSelectedWidget(widget)}>
-              {widget.component}
+            <div key={widget.i} onClick={() => {setSelectedWidget(widget); setBackgroundBlur(false)}}>
+              {getWidgetComponent(widget.config, widget === selectedWidget)}
             </div>
           ))}
         </GridLayout>
