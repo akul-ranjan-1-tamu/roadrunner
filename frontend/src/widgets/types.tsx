@@ -1,5 +1,6 @@
 import { Layout } from "react-grid-layout";
 
+//add new enum with each widget type
 export enum WIDGET_TYPE {BASIC_DISPLAY};
 
 export type ResizeHandle = "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne";
@@ -29,12 +30,12 @@ export interface WidgetProps {
     config: WidgetConfig;
 };
 
-export interface FormProps {
-    config: WidgetConfig;
-    setConfig: (newConfig: WidgetConfig) => void;
+export interface FormProps<T extends WidgetConfig> {
+    config: T;
+    setConfig: (newConfig: T) => void;
 };
 
-export interface ComponentWithForm<WidgetProps, FormProps, ConfigType> extends React.FC<WidgetProps> {
+export interface WidgetType<WidgetProps, FormProps, ConfigType> extends React.FC<WidgetProps> {
     form: React.FC<FormProps>;
     defaultConfig: ConfigType;
 }

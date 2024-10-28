@@ -16,7 +16,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     const [data, setData] = useState<RecentData>({});
 
     useEffect(() => {
-        const socket = io("http://localhost:5000"); // TODO: Make the port a constant
+        const socket = io("http://localhost:5000"); // TODO: Make the port a constant/env var
 
         socket.on('id', (newData: DataPayload) => {
 

@@ -3,6 +3,7 @@ import { RESIZE_HANDLES, WidgetConfig } from "../../widgets/types";
 import { WIDGET_TYPE } from "../../widgets/types";
 
 export enum MENU_STATE { DEFAULT, GRAPHS, DIALS }
+
 export interface MenuEntry<Config extends WidgetConfig> {
     redirect?: {icon: String, label: String, onClickState: MENU_STATE},
     widget?: Config;

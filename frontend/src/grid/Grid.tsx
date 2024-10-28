@@ -86,7 +86,7 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
         >
           {widgets.map((widget) => (
             <div key={widget.i} onClick={() => {setSelectedWidget(widget); setBackgroundBlur(false)}}>
-              {getWidgetComponent(widget.config, widget === selectedWidget)}
+              {getWidgetComponent(widget.config, widget.i === selectedWidget?.i)}
             </div>
           ))}
         </GridLayout>

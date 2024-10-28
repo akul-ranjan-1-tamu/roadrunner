@@ -85,6 +85,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
     setSelectedWidget(newSelectedWidget); 
   };
 
+  console.log(selectedWidget);
+
   return (
     <div className={"dashboard-container " + (inMenu ? "in-menu " : "") + (backgroundBlur ? "background-blur" : "")}>
         {
