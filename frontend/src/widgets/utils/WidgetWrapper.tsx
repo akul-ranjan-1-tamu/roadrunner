@@ -10,6 +10,7 @@ interface WidgetWrapperProps<T extends WidgetConfig> {
     config: T;
     Form: React.FC<FormProps<T>>;
     setGridEnabled: (enabled: boolean) => void;
+    deleteWidget: () => void;
     children?: React.ReactNode;
 }
 
@@ -19,6 +20,7 @@ const WidgetWrapper = <ConfigType extends WidgetConfig>({
     config,
     Form,
     setGridEnabled, 
+    deleteWidget,
     children
 }: WidgetWrapperProps<ConfigType>) => {
     const [formActive, setFormActive] = useState<boolean>(false);
@@ -33,7 +35,7 @@ const WidgetWrapper = <ConfigType extends WidgetConfig>({
         setFormActive(true);
     };
 
-    const {deleteWidget, setWidgets, widgets} = useWidgets();
+    const {setWidgets, widgets} = useWidgets();
 
     const renderModalWithOverlay = () => (
         <>
@@ -41,7 +43,6 @@ const WidgetWrapper = <ConfigType extends WidgetConfig>({
             <div className="modal-content">
                 <button className="close-button" onClick={() => setFormActive(false)}>Close</button>
                 <Form config={config} i={i} />
-                <button onClick={() => {deleteWidget(i)}}>delete widget</button>
             </div>
         </>
     );
@@ -51,7 +52,6 @@ const WidgetWrapper = <ConfigType extends WidgetConfig>({
             {selected && (
                 <>
                     <button onClick={handleEditButtonClick} >edit!</button>
-                    <button onClick={() => {setWidgets([])}}>delete!</button>
                 </>
             )}
             {children}

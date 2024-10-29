@@ -69,9 +69,6 @@ const Grid: React.FC<GridProps> = ({setBackgroundBlur, incomingWidget}) => {
     addWidget(droppedWidget);
   };
 
-  var layout: Widget[] = widgets;
-  if (!enabled) layout = layout.map((w) => {return {...w, isDraggable: false}});
-
   const handleSelectedWidgetChange = (newSelectedWidget: Widget | null ): void => {
 
     if (newSelectedWidget !== null) {
@@ -100,6 +97,15 @@ const Grid: React.FC<GridProps> = ({setBackgroundBlur, incomingWidget}) => {
     setSelectedWidget(newSelectedWidget); 
   };
 
+  const deleteWidget = (i: string) => {
+    console.log("deleting widget: ", i);
+    console.log("after", widgets.filter((w) => {return w.i !== i}));
+    setWidgets(widgets.filter((w) => {return w.i !== i}));
+  };
+
+  var layout: Widget[] = widgets;
+  if (!enabled) layout = layout.map((w) => {return {...w, isDraggable: false}});
+
   return (
     <div ref={gridContainerRef} className={"grid-container " + (DEBUG ? "debug " : "")}>
       {gridWidth > 0 && (
@@ -124,7 +130,7 @@ const Grid: React.FC<GridProps> = ({setBackgroundBlur, incomingWidget}) => {
         >
           {widgets.map((widget) => (
             <div key={widget.i} onClick={() => {handleSelectedWidgetChange(widget); setBackgroundBlur(false)}}>
-              {getWidgetComponent(widget.config, widget.i, widget.i === selectedWidget?.i, setEnabled)}
+              {getWidgetComponent(widget.config, widget.i, widget.i === selectedWidget?.i, setEnabled, () => deleteWidget(widget.i))}
             </div>
           ))}
         </GridLayout>
