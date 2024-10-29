@@ -1,4 +1,5 @@
 import BasicDisplay, { BasicDisplayConfig } from "../../widgets/basic-display/BasicDisplay";
+import EmptyWidget from "../../widgets/empty-widget/EmptyWidget";
 import { RESIZE_HANDLES, WidgetConfig } from "../../widgets/types";
 import { WIDGET_TYPE } from "../../widgets/types";
 
@@ -16,9 +17,10 @@ export const DEFAULT_MENU_CONTENTS: MenuContents<any> = {
         {redirect: {icon: "", label: "dials", onClickState: MENU_STATE.DIALS}}, ]
 };
 
-export const GRAPHS_CONTENTS: MenuContents<BasicDisplayConfig> = {
+export const GRAPHS_CONTENTS: MenuContents<any> = {
     contents: [
         {widget: BasicDisplay.defaultConfig},
+        {widget: EmptyWidget.defaultConfig}
     ]
 };
 

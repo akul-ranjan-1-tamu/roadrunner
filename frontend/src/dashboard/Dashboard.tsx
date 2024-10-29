@@ -48,7 +48,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
       i: `widget-${widgetID.current}`,
       isBounded: true,
       resizeHandles: [],
-      config: incomingWidget || BasicDisplay.defaultConfig
+      config: incomingWidget || BasicDisplay.defaultConfig,
+      w: incomingWidget?.w || 1,
+      h: incomingWidget?.h || 1,
     };
     widgetID.current += 1;
     setWidgets([...widgets, updatedWidget]);
