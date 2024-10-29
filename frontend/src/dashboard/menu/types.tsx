@@ -1,6 +1,7 @@
 import BasicDisplay, { BasicDisplayConfig } from "../../widgets/basic-display/BasicDisplay";
 import { RESIZE_HANDLES, WidgetConfig } from "../../widgets/types";
 import { WIDGET_TYPE } from "../../widgets/types";
+import Dial from "../../widgets/dial/dial"
 
 export enum MENU_STATE { DEFAULT, GRAPHS, DIALS }
 
@@ -19,6 +20,7 @@ export const DEFAULT_MENU_CONTENTS: MenuContents<any> = {
 export const GRAPHS_CONTENTS: MenuContents<BasicDisplayConfig> = {
     contents: [
         {widget: BasicDisplay.defaultConfig},
+        {widget: Dial.defaultConfig}
     ]
 };
 
