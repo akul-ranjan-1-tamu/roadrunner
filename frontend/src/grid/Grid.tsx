@@ -5,20 +5,24 @@ import "./styles.css";
 import "react-grid-layout/css/styles.css";
 import { DEBUG } from "../utils/debug";
 import { getWidgetComponent } from "../widgets/utils/getWidgetComponent";
+import { useWidgets } from "../widgets/hooks/WidgetContext";
+import { config } from "process";
+import BasicDisplay from "../widgets/basic-display/BasicDisplay";
 
 interface GridProps {
-  widgets: Widget[];
-  onLayoutChange: (newWidgetLayout: Widget[]) => void;
-  onDrop: (widget: Widget, x: number, y: number) => void;
   setBackgroundBlur: (state: boolean) => void;
-  selectedWidget: Widget | null;
-  setSelectedWidget: (widget: Widget | null) => void;
+  incomingWidget: WidgetConfig | null;
 }
 
-const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgroundBlur, selectedWidget, setSelectedWidget}) => {
+const Grid: React.FC<GridProps> = ({setBackgroundBlur, incomingWidget}) => {
+  const {widgets, setWidgets, addWidget} = useWidgets();
+  const [selectedWidget, setSelectedWidget] = useState<Widget | null>(null);
+  const widgetID = useRef<number>(0);
+  
   const [gridWidth, setGridWidth] = useState<number>(0);
   const [enabled, setEnabled] = useState<boolean>(true);
   const gridContainerRef = useRef<HTMLDivElement>(null);
+
 
   //updates grid width based on container
   useEffect(() => {
@@ -50,21 +54,51 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
         : widget;
     });
 
-    onLayoutChange(updatedWidgets);
+    setWidgets(updatedWidgets);
   };
 
   const handleDrop = (widget: Widget) => {
     const droppedWidget = {
       ...widget,
-      w: widget.w,
-      h: widget.h,
+      w: incomingWidget ? incomingWidget.h : 1,
+      h: incomingWidget ? incomingWidget.w : 1, 
+      config: incomingWidget || BasicDisplay.defaultConfig,
+      i: String(widgetID.current)
     };
-
-    onDrop(droppedWidget, widget.x, widget.y);
+    widgetID.current += 1;
+    addWidget(droppedWidget);
   };
 
   var layout: Widget[] = widgets;
   if (!enabled) layout = layout.map((w) => {return {...w, isDraggable: false}});
+
+  const handleSelectedWidgetChange = (newSelectedWidget: Widget | null ): void => {
+
+    if (newSelectedWidget !== null) {
+
+      const updatedWidget: Widget = {
+        ...newSelectedWidget,
+        resizeHandles: newSelectedWidget.config.availableHandles,
+        isResizable: true
+      }
+  
+      const temp = widgets.map((w) => {
+        if (w === newSelectedWidget) return updatedWidget;
+        else return {...w, resizeHandles: [], isResizable: false}
+      });
+  
+      setWidgets(temp);
+
+    } else {
+      const temp = widgets.map((w) => {
+        return {...w, resizeHandles: [], isResizable: false}
+      });
+  
+      setWidgets(temp);
+    }
+
+    setSelectedWidget(newSelectedWidget); 
+  };
 
   return (
     <div ref={gridContainerRef} className={"grid-container " + (DEBUG ? "debug " : "")}>
@@ -89,7 +123,7 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
           style={{ width: "100%", height: "100%" }}
         >
           {widgets.map((widget) => (
-            <div key={widget.i} onClick={() => {setSelectedWidget(widget); setBackgroundBlur(false)}}>
+            <div key={widget.i} onClick={() => {handleSelectedWidgetChange(widget); setBackgroundBlur(false)}}>
               {getWidgetComponent(widget.config, widget.i, widget.i === selectedWidget?.i, setEnabled)}
             </div>
           ))}

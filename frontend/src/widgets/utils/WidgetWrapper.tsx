@@ -33,7 +33,7 @@ const WidgetWrapper = <ConfigType extends WidgetConfig>({
         setFormActive(true);
     };
 
-    const {deleteWidget} = useWidgets();
+    const {deleteWidget, setWidgets, widgets} = useWidgets();
 
     const renderModalWithOverlay = () => (
         <>
@@ -49,7 +49,10 @@ const WidgetWrapper = <ConfigType extends WidgetConfig>({
     return (
         <div className="widget-wrapper-container">
             {selected && (
-                <button onClick={handleEditButtonClick} >edit!</button>
+                <>
+                    <button onClick={handleEditButtonClick} >edit!</button>
+                    <button onClick={() => {setWidgets([])}}>delete!</button>
+                </>
             )}
             {children}
             {/* Render modal with overlay if form is active */}

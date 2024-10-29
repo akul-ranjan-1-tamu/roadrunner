@@ -17,7 +17,6 @@ export const WidgetLayoutContext = createContext<WidgetLayoutContextType>( {widg
 
 const WidgetProvider: React.FC<DataProviderProps> = ({ children }) => {
     const [widgets, setWidgets] = useState<Widget[]>([]);
-    const widgetID = useRef<number>(0);
 
     const editConfig = <T extends WidgetConfig>(i: string, newConfig: T) => {
         setWidgets(widgets.map((widget) => {if (widget.i === i) return {...widget, config: newConfig}; else return widget}));
@@ -31,11 +30,12 @@ const WidgetProvider: React.FC<DataProviderProps> = ({ children }) => {
         console.log(
             "filtered", widgets.filter((widget) => { return widget.i != i})
         )
-        setWidgets(widgets.filter((widget) => { return widget.i != i}));
+        //setWidgets(widgets.filter((widget) => { return widget.i != i}));
+        setWidgets([]); 
     };
     
     const addWidget = (newWidget: Widget) => {
-        setWidgets([...widgets, newWidget]);
+        setWidgets([...widgets, {...newWidget}]);
     }
     
 

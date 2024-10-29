@@ -15,13 +15,9 @@ interface DashboardProps {}
 const Dashboard: React.FC<DashboardProps> = () => {
   const [inMenu, setInMenu] = useState<boolean>(false);
   const [backgroundBlur, setBackgroundBlur] = useState<boolean>(false);
-
   const [menuState, setMenuState] = useState<MENU_STATE>(MENU_STATE.DEFAULT);
 
-  const {widgets, setWidgets} = useWidgets();
-  const [selectedWidget, setSelectedWidget] = useState<Widget | null>(null);
   const [incomingWidget, setIncomingWidget] = useState<WidgetConfig | null>(null);
-  const widgetID = useRef<number>(0);
 
   // Close the menu after animation, allowing time for state reset
   useEffect(() => {
@@ -37,58 +33,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const handleWidgetSpawn = (widgetPreset: WidgetConfig) => {
     setInMenu(false);
     setIncomingWidget(widgetPreset);
-    console.log(widgetPreset);
   };
-
-  const handleDropWidget = (newWidget: Widget, x: number, y: number) => {
-    const updatedWidget: Widget = {
-      ...newWidget,
-      x,
-      y,
-      i: `widget-${widgetID.current}`,
-      isBounded: true,
-      resizeHandles: [],
-      config: incomingWidget || BasicDisplay.defaultConfig,
-      w: incomingWidget?.w || 1,
-      h: incomingWidget?.h || 1,
-    };
-    widgetID.current += 1;
-    setWidgets([...widgets, updatedWidget]);
-  };
-
-  const handleLayoutChange = (newWidgetLayout: Widget[]) => {
-    setWidgets(newWidgetLayout);
-  }
-
-  const handleSelectedWidgetChange = (newSelectedWidget: Widget | null ): void => {
-
-    if (newSelectedWidget !== null) {
-
-      const updatedWidget: Widget = {
-        ...newSelectedWidget,
-        resizeHandles: newSelectedWidget.config.availableHandles,
-        isResizable: true
-      }
-  
-      const temp = widgets.map((w) => {
-        if (w === newSelectedWidget) return updatedWidget;
-        else return {...w, resizeHandles: [], isResizable: false}
-      });
-  
-      setWidgets(temp);
-
-    } else {
-      const temp = widgets.map((w) => {
-        return {...w, resizeHandles: [], isResizable: false}
-      });
-  
-      setWidgets(temp);
-    }
-
-    setSelectedWidget(newSelectedWidget); 
-  };
-
-  console.log(selectedWidget);
 
   return (
     <div className={"dashboard-container " + (inMenu ? "in-menu " : "") + (backgroundBlur ? "background-blur" : "")}>
@@ -96,8 +41,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Menu state={menuState} setMenuState={setMenuState} handleWidgetSpawn={handleWidgetSpawn} />
         }
       <div className="dashboard-contents" onClick={() => (inMenu ? setInMenu(false) : null)}>
-        <Grid widgets={widgets} onLayoutChange={handleLayoutChange} onDrop={handleDropWidget} setBackgroundBlur={setBackgroundBlur} selectedWidget={selectedWidget} setSelectedWidget={handleSelectedWidgetChange}/>
-        <NavBar changeMenuState={() => setInMenu(true)} emptyLayout={() => setWidgets([])}/>
+        <Grid incomingWidget={incomingWidget} setBackgroundBlur={setBackgroundBlur} />
+        <NavBar changeMenuState={() => setInMenu(true)} />
       </div>
     </div>
   );
