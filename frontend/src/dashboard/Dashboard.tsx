@@ -6,6 +6,7 @@ import Menu from "./menu/Menu";
 import { MENU_STATE } from "./menu/types";
 import { Widget, WidgetConfig } from "../widgets/types";
 import BasicDisplay from "../widgets/basic-display/BasicDisplay";
+import { useWidgets } from "../widgets/hooks/WidgetContext";
 
 const ANIMATION_DURATION = 300;
 
@@ -17,7 +18,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const [menuState, setMenuState] = useState<MENU_STATE>(MENU_STATE.DEFAULT);
 
-  const [widgets, setWidgets] = useState<Widget[]>([]);
+  const {widgets, setWidgets} = useWidgets();
   const [selectedWidget, setSelectedWidget] = useState<Widget | null>(null);
   const [incomingWidget, setIncomingWidget] = useState<WidgetConfig | null>(null);
   const widgetID = useRef<number>(0);

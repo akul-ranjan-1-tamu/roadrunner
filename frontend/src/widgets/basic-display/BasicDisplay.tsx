@@ -4,6 +4,7 @@ import { WidgetProps, WidgetConfig, FormProps, WidgetType, RESIZE_HANDLES } from
 import WidgetWrapper from "../utils/WidgetWrapper";
 import { WIDGET_TYPE } from "../types";
 import { DATASTREAM, datastreams } from "../../shared-types";
+import { useWidgets } from "../hooks/WidgetContext";
 
 
 // define all the configurable options unique to this widget type
@@ -17,22 +18,25 @@ interface BasicDisplayProps extends WidgetProps {
 }
 
 //component which defines the widget (and its behavior)
-const BasicDisplay: WidgetType<BasicDisplayProps, FormProps<BasicDisplayConfig>, BasicDisplayConfig> = ({ selected, config }) => {
+const BasicDisplay: WidgetType<BasicDisplayProps, FormProps<BasicDisplayConfig>, BasicDisplayConfig> = ({ selected, i, config, setGridEnabled }) => {
     const { data } = useData();
-    const [configState, setConfig] = useState<BasicDisplayConfig>(config);
-    const value = data[configState.dataKey] ? data[configState.dataKey].value : null;
+    const value = data[config.dataKey] ? data[config.dataKey].value : null;
 
     //make sure to use the widget wrapper!
-    return <WidgetWrapper selected={selected} config={configState} setConfig={setConfig} Form={BasicDisplay.form}>{configState.dataKey}: {value}</WidgetWrapper>;
+    return <WidgetWrapper selected={selected} config={config} Form={BasicDisplay.Form} i={i} setGridEnabled={setGridEnabled}>{config.dataKey}: {value}</WidgetWrapper>;
 };
 
 
 //defines form which edits the configurable settings
-BasicDisplay.form = ({ config, setConfig }: FormProps<BasicDisplayConfig>) => {
+const BasicDisplayForm: React.FC<FormProps<BasicDisplayConfig>> = ({i, config}) => {
+
+    const {editConfig} = useWidgets();
+
     // Handle changes to the selected datastream type
     const handleDataKeyChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const newDataKey = event.target.value as DATASTREAM;
-        setConfig({ ...config, dataKey: newDataKey });
+
+        editConfig(i, { ...config, dataKey: newDataKey } as BasicDisplayConfig);
     };
 
     return (
@@ -52,6 +56,7 @@ BasicDisplay.form = ({ config, setConfig }: FormProps<BasicDisplayConfig>) => {
         </div>
     );
 };
+BasicDisplay.Form = BasicDisplayForm;
 
 //define the default configuration
 BasicDisplay.defaultConfig = {

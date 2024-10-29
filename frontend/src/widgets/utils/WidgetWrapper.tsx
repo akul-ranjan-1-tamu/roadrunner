@@ -1,48 +1,59 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "../styles.css";
-import "./styles.css";
 import { FormProps, WidgetConfig } from "../types";
+import { useWidgets } from "../hooks/WidgetContext";
 
 interface WidgetWrapperProps<T extends WidgetConfig> {
     selected: boolean;
+    i : string;
     config: T;
-    setConfig: React.Dispatch<React.SetStateAction<T>>;
     Form: React.FC<FormProps<T>>;
+    setGridEnabled: (enabled: boolean) => void;
     children?: React.ReactNode;
 }
 
 const WidgetWrapper = <ConfigType extends WidgetConfig>({
     selected,
+    i,
     config,
-    setConfig,
     Form,
+    setGridEnabled, 
     children
 }: WidgetWrapperProps<ConfigType>) => {
-
     const [formActive, setFormActive] = useState<boolean>(false);
 
-    const renderModal = () => {
-        return (
-            <div className="modal-overlay">
-                <div className="modal-content">
-                    <button className="close-button" onClick={() => setFormActive(false)}>Close</button>
-                    <Form config={config} setConfig={setConfig} />
-                </div>
-            </div>
-        );
+    useEffect(() => {
+        if (!formActive) setGridEnabled(true);
+    }, [formActive])
+
+    const handleEditButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setGridEnabled(false);
+        setFormActive(true);
     };
 
+    const {deleteWidget} = useWidgets();
+
+    const renderModalWithOverlay = () => (
+        <>
+            <div className="fullscreen-overlay"></div>
+            <div className="modal-content">
+                <button className="close-button" onClick={() => setFormActive(false)}>Close</button>
+                <Form config={config} i={i} />
+                <button onClick={() => {deleteWidget(i)}}>delete widget</button>
+            </div>
+        </>
+    );
+
     return (
-        <div className={"widget-wrapper-container"}>
+        <div className="widget-wrapper-container">
             {selected && (
-                <div>
-                    <button onClick={() => setFormActive(true)}>edit!</button>
-                </div>
+                <button onClick={handleEditButtonClick} >edit!</button>
             )}
             {children}
-
-            {formActive && ReactDOM.createPortal(renderModal(), document.body)}
+            {/* Render modal with overlay if form is active */}
+            {formActive && ReactDOM.createPortal(renderModalWithOverlay(), document.body)}
         </div>
     );
 };

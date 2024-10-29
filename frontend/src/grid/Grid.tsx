@@ -17,6 +17,7 @@ interface GridProps {
 
 const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgroundBlur, selectedWidget, setSelectedWidget}) => {
   const [gridWidth, setGridWidth] = useState<number>(0);
+  const [enabled, setEnabled] = useState<boolean>(true);
   const gridContainerRef = useRef<HTMLDivElement>(null);
 
   //updates grid width based on container
@@ -62,22 +63,25 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
     onDrop(droppedWidget, widget.x, widget.y);
   };
 
+  var layout: Widget[] = widgets;
+  if (!enabled) layout = layout.map((w) => {return {...w, isDraggable: false}});
+
   return (
     <div ref={gridContainerRef} className={"grid-container " + (DEBUG ? "debug " : "")}>
       {gridWidth > 0 && (
         <GridLayout
           className="layout"
-          layout={widgets}
+          layout={layout}
           cols={16}
           rowHeight={gridWidth / 16 - 10}
           width={gridWidth} 
-          isDraggable={true}
-          isResizable={true}
-          isDroppable={true}
+          isDraggable={enabled}
+          isResizable={enabled}
+          isDroppable={enabled}
           compactType={null}
           isBounded={true}
           onLayoutChange={handleLayoutChange}
-          onDragStart={() => setBackgroundBlur(true)}
+          onDrag={() => setBackgroundBlur(true)}
           onDragStop={() => {setBackgroundBlur(false); setSelectedWidget(null)}}
           onResizeStart={() => setBackgroundBlur(true)}
           onResizeStop={() => setBackgroundBlur(false)}
@@ -86,7 +90,7 @@ const Grid: React.FC<GridProps> = ({ widgets, onLayoutChange, onDrop, setBackgro
         >
           {widgets.map((widget) => (
             <div key={widget.i} onClick={() => {setSelectedWidget(widget); setBackgroundBlur(false)}}>
-              {getWidgetComponent(widget.config, widget.i === selectedWidget?.i)}
+              {getWidgetComponent(widget.config, widget.i, widget.i === selectedWidget?.i, setEnabled)}
             </div>
           ))}
         </GridLayout>

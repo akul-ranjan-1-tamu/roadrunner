@@ -26,16 +26,24 @@ export interface WidgetConfig {
 }
 
 export interface WidgetProps {
+    //uniquely identifies the widget (should correspond to Widget.i)
+    i: string;
+    //whether or not the widget is selected
     selected: boolean;
+    //the widget's config
     config: WidgetConfig;
+    //enable/disable the grid when we enter/exit the form
+    setGridEnabled: (enabled: boolean) => void;
 };
 
 export interface FormProps<T extends WidgetConfig> {
+    //uniquely identifies every layout/widget item
+    i: string;
+    //the current config
     config: T;
-    setConfig: (newConfig: T) => void;
 };
 
 export interface WidgetType<WidgetProps, FormProps, ConfigType> extends React.FC<WidgetProps> {
-    form: React.FC<FormProps>;
+    Form: React.FC<FormProps>;
     defaultConfig: ConfigType;
 }
